@@ -1,0 +1,21 @@
+tags:
+  - Auth
+summary: logout user
+description: Logs out user and invalidates session
+operationId: logoutUser
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    description: Successfully logged out
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Logged out

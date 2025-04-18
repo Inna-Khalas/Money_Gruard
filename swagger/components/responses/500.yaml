@@ -1,0 +1,14 @@
+description: Various errors on the server side
+content:
+  application/json:
+    schema:
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+          example: 500
+        message:
+          type: string
+          example: 'Internal Server Error'

@@ -1,0 +1,34 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Transactions app
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: This is a documentation of transactions app
+tags:
+  - name: Transactions
+    description: Operations about transactions.
+  - name: Auth
+    description: Auth operations.
+servers:
+  - url: http://localhost:3000
+paths:
+  /auth/register:
+    post:
+      $ref: '../swagger/paths/auth/register/post.yaml'
+  /auth/login:
+    post:
+      $ref: '../swagger/paths/auth/login/post.yaml'
+  /auth/refresh:
+    post:
+      $ref: '../swagger/paths/auth/refresh/post.yaml'
+  /auth/logout:
+    post:
+      $ref: '../swagger/paths/auth/logout/post.yaml'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

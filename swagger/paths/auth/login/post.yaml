@@ -1,0 +1,38 @@
+tags:
+  - Auth
+summary: login user
+description: Authenticates user and returns tokens
+operationId: loginUser
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: ../../../components/schemas/user.yaml
+responses:
+  '200':
+    description: Login successful
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Login successful
+            data:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                refreshToken:
+                  type: string

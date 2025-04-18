@@ -1,0 +1,40 @@
+tags:
+  - Auth
+summary: refresh tokens
+description: Get new access and refresh tokens using refresh token
+operationId: refreshToken
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - refreshToken
+        properties:
+          refreshToken:
+            type: string
+            example: <your_refresh_token>
+responses:
+  '200':
+    description: Tokens refreshed successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Tokens refreshed
+            data:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                refreshToken:
+                  type: string
