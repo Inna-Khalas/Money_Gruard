@@ -1,13 +1,21 @@
 
-post:
+
+delete:
   tags:
-    - Auth
-  summary: Logout user and clear session
-  description: Logs out the user by clearing the access and refresh tokens from cookies.
-  operationId: logoutUser
+    - Transactions
+  summary: Delete transaction by ID
+  description: Deletes a transaction from the database based on the provided transaction ID.
+  operationId: deleteTransaction
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the transaction to delete
+      schema:
+        type: string
   responses:
     '200':
-      description: User successfully logged out
+      description: Transaction successfully deleted
       content:
         application/json:
           schema:
@@ -18,9 +26,9 @@ post:
                 example: success
               message:
                 type: string
-                example: User logged out
+                example: Transaction deleted
     '400':
-      description: No active session found
+      description: Invalid transaction ID
       content:
         application/json:
           schema:
@@ -31,9 +39,9 @@ post:
                 example: error
               message:
                 type: string
-                example: No active session found
-    '401':
-      description: Token expired or invalid
+                example: Invalid transaction ID
+    '404':
+      description: Transaction not found
       content:
         application/json:
           schema:
@@ -44,6 +52,6 @@ post:
                 example: error
               message:
                 type: string
-                example: Token expired or invalid, user logged out
+                example: Transaction not found
     '500':
       $ref: "../../../components/responses/500.yaml"
