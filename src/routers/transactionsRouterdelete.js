@@ -1,12 +1,9 @@
-
-
-
-import { Router } from 'express';  
-import { deleteTransaction } from '../controllers/transactions/deleteTransactionController';  
+import { Router } from 'express';
+import { deleteTransaction } from '../controllers/transactions/deleteTransactionController';
+import { ctrlWrapper } from '../utils/ctrlWrapper';
 
 const router = Router();
 
+router.delete('/transactions/:id', ctrlWrapper(deleteTransaction));
 
-router.delete('/transactions/:id', deleteTransaction);
-
-export default router;  
+export default router;
