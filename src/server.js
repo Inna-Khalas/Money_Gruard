@@ -8,6 +8,9 @@ import { getEnvVar } from './utils/getEnvVar.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
+import authRouter from './routers/authRouter.js';  //  маршрути для логауту VB
+import transactionsRouter from './routers/transactionsRouter.js';  //  маршрути для транзакцій VB
+
 const PORT = Number(getEnvVar('PORT', '3000'));
 
 function serverStart() {
@@ -29,6 +32,10 @@ function serverStart() {
       message: 'Hey',
     });
   });
+
+app.use('/api/auth', authRouter); // VB
+app.use('/api', transactionsRouter); // VB
+
 
   app.use(router);
   app.use(/(.*)/, notFoundHandler);
