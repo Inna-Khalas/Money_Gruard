@@ -20,4 +20,3 @@ export const getCategoriesService = async () => {
     }
 };
 
-export default { getCategoriesService };
