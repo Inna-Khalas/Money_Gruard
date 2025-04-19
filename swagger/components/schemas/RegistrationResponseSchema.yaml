@@ -1,0 +1,28 @@
+type: object
+required:
+  - status
+  - message
+  - data
+properties:
+  status:
+    type: integer
+    example: 201
+  message:
+    type: string
+    example: Successfully registered a user!
+  data:
+    type: object
+    required:
+      - id
+      - name
+      - email
+    properties:
+      id:
+        type: string
+        example: 67f39f29e3c363521e0ae31d
+      name:
+        type: string
+        example: John Doe
+      email:
+        type: string
+        example: user@example.com

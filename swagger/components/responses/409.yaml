@@ -1,0 +1,8 @@
+description: Email already in use
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorResponseSchema.yaml
+    example:
+      status: 409
+      message: 'Email in use'

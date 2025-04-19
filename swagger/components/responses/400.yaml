@@ -1,0 +1,9 @@
+description: Invalid request or bad input
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorResponseSchema.yaml
+    example:
+      status: 400
+      message: 'Invalid input'
+      data: '"email" is required, "name" is required'

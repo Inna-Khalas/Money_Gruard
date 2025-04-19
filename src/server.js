@@ -8,6 +8,10 @@ import { getEnvVar } from './utils/getEnvVar.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
+const swaggerDocument = YAML.load('./docs/openapi.yaml');
+
 const PORT = Number(getEnvVar('PORT', '3000'));
 
 function serverStart() {
@@ -35,8 +39,10 @@ function serverStart() {
   app.use(errorHandler);
 
   app.listen(PORT, () => {
-    console.log(` Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
   });
+
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 }
 
 export default serverStart;
