@@ -2,9 +2,8 @@ import { Transaction } from "../db/models/transactions.js";
 
 // Create a new transaction
 
-export const createTransaction = async (paylord) => {
-  const data = await Transaction(paylord);
-  return data;
+export const createTransaction = async (payload) => {
+  return await Transaction.create(payload);
 };
 
 // Put transaction
