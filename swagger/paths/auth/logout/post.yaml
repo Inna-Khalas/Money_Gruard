@@ -19,3 +19,42 @@ responses:
             message:
               type: string
               example: Logged out
+'400':
+      description: No active session found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: error
+              message:
+                type: string
+                example: No active session found
+    '401':
+      description: Token expired or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: error
+              message:
+                type: string
+                example: Token expired or invalid, user logged out
+    '500':
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: error
+              message:
+                type: string
+                example: Failed to log out
