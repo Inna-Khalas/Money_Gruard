@@ -9,6 +9,9 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
+import authRouter from './routers/authRouterlogout.js';  //  маршрути для логауту
+import transactionsRouter from './routers/transactionsRouterdelete.js';  //  маршрути для транзакцій
+
 const PORT = Number(getEnvVar('PORT', '3000'));
 
 function serverStart() {
@@ -30,6 +33,9 @@ function serverStart() {
       message: 'Hey',
     });
   });
+
+app.use('/api/auth', authRouter); // VB
+app.use('/api', transactionsRouter); // VB
 
   app.use(router);
 
