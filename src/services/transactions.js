@@ -7,7 +7,7 @@ export const TransactionsCollections =
 
 // Create a new transaction
 
-export const createTransaction = async (paylord) => {
-  const data = await TransactionsCollections(paylord);
+export const createTransaction = async (payload) => {
+  const data = await TransactionsCollections.create(payload);
   return data;
 };
