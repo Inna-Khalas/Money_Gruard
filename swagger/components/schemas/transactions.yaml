@@ -1,0 +1,62 @@
+type: object
+properties:
+  _id:
+    type: string
+    description: Unique identifier for the transaction
+    example: 643d4a5d59f1c5a35c7d91e1
+  comment:
+    type: string
+    description: Optional comment or note about the transaction
+    example: Bought groceries at the store
+  owner:
+    type: string
+    format: ObjectId
+    description: The ID of the user who owns this transaction
+    example: 643d4a5d59f1c5a35c7d91d5
+  type:
+    type: string
+    description: Type of the transaction — either income or expense
+    enum:
+      - income
+      - expense
+    example: expense
+  category:
+    type: string
+    description: Required if the type is 'expense'; defines the spending category
+    enum:
+      - Main expenses
+      - Products
+      - Car
+      - Self care
+      - Child care
+      - Household products
+      - Education
+      - Leisure
+      - Other expenses
+      - Entertainment
+    example: Products
+  value:
+    type: number
+    minimum: 0
+    description: Transaction value
+    example: 150.75
+  date:
+    type: string
+    format: date-time
+    description: Date of the transaction
+    example: 2024-04-17T15:23:00.000Z
+  createdAt:
+    type: string
+    format: date-time
+    description: Timestamp when the transaction was created
+    example: 2024-04-17T15:23:00.000Z
+  updatedAt:
+    type: string
+    format: date-time
+    description: Timestamp when the transaction was last updated
+    example: 2024-04-17T15:23:00.000Z
+required:
+  - owner
+  - type
+  - value
+  - date
