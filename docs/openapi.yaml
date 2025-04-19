@@ -27,6 +27,10 @@ paths:
     post:
       $ref: '../swagger/paths/auth/logout/post.yaml'
 
+  /transactions:
+    post:
+      $ref: '../swagger/paths/transactions/post.yaml'
+
 components:
   securitySchemes:
     bearerAuth:
