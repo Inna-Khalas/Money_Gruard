@@ -1,13 +1,15 @@
-import transactionSchema from '../db/models/transactions.js';
-import mongoose from 'mongoose';
-
-export const TransactionsCollections =
-  mongoose.models.Transaction ||
-  mongoose.model('Transaction', transactionSchema);
+import { Transaction } from "../db/models/transactions.js";
 
 // Create a new transaction
 
 export const createTransaction = async (payload) => {
-  const data = await TransactionsCollections.create(payload);
-  return data;
+  return await Transaction.create(payload);
+};
+
+// Put transaction
+
+export const updateTransaction = async (transId, payload) => { 
+    return await Transaction.findOneAndUpdate(
+        { _id: transId }, payload, { new: true }
+    );
 };
