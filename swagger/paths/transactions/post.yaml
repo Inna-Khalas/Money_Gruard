@@ -1,0 +1,76 @@
+tags:
+  - Transactions
+summary: Create a new transaction
+description: Creates a new income or expense transaction.
+operationId: createTransaction
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          comment:
+            type: string
+            example: 'Weekly grocery shopping'
+          type:
+            type: string
+            enum: [expense, income]
+            default: income
+          category:
+            type: string
+            enum:
+              - Main expenses
+              - Products
+              - Car
+              - Self care
+              - Child care
+              - Household products
+              - Education
+              - Leisure
+              - Other expenses
+              - Entertainment
+          value:
+            type: number
+            minimum: 0
+            example: 250.5
+          date:
+            type: string
+            format: date-time
+            example: '2025-04-18T18:00:00Z'
+        required:
+          - value
+          - date
+responses:
+  '201':
+    description: Transaction created successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            _id:
+              type: string
+            type:
+              type: string
+            category:
+              type: string
+            value:
+              type: number
+            date:
+              type: string
+              format: date-time
+            comment:
+              type: string
+            owner:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+  '400':
+    description: Bad Request
