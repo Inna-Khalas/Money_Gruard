@@ -1,13 +1,9 @@
 import { getCategoriesService } from '../../services/getCategories.js';
+import { ctrlWrapper } from '../../utils/ctrlWrapper.js';
 
-export const getCategories = async (req, res) => {
-    try {
-        const categories = await getCategoriesService();
-
-        res.status(200).json({ success: true, data: categories });
-    } catch (error) {
-        console.error('Error in getCategories:', error.message);
-
-        res.status(500).json({ success: false, message: 'Failed to retrieve categories' });
-    }
+const getCategories = async (req, res) => {
+    const categories = await getCategoriesService();
+    res.status(200).json({ success: true, data: categories });
 };
+
+export default ctrlWrapper(getCategories);
