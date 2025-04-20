@@ -1,8 +1,5 @@
-
-
-
 import { Router } from 'express';  
-import { deleteTransaction } from '../controllers/transactions/deleteTransactionController';  
+import { deleteTransaction } from '../controllers/transactions/deleteTransactionController.js';  // поправил импорт (Андрей)
 
 const router = Router();
 
