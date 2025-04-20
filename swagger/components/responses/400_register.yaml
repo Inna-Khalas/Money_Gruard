@@ -1,18 +1,18 @@
-description: Internal Server Error
+description: Bad Request - Registration validation error
 content:
   application/json:
     schema:
+      type: object
       required:
         - status
         - message
-        - data
       properties:
         status:
           type: integer
-          example: 500
+          example: 400
         message:
           type: string
           example: Something went wrong
         data:
           type: string
-          example: Error details
+          example: '"email" is required, "emai" is not allowed'

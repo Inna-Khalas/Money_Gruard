@@ -2,14 +2,23 @@ import { HttpError } from 'http-errors';
 
 export const errorHandler = (err, _req, res, _next) => {
   if (err instanceof HttpError) {
-    res.status(err.status).send({
+    if (err.errors && Array.isArray(err.errors)) {
+      const messages = err.errors.map((e) => e.message).join(', ');
+
+      return res.status(err.status).json({
+        status: err.status,
+        message: 'Something went wrong',
+        data: messages,
+      });
+    }
+
+    return res.status(err.status).json({
       status: err.status,
-      data: err,
+      message: err.message || 'Something went wrong',
     });
-    return;
   }
 
-  res.status(500).send({
+  res.status(500).json({
     status: 500,
     message: 'Something went wrong',
     error: err.message,

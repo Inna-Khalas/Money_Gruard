@@ -1,18 +1,19 @@
-description: Internal Server Error
+description: Conflict - User already exists
 content:
   application/json:
     schema:
+      type: object
       required:
         - status
         - message
-        - data
+        - error
       properties:
         status:
           type: integer
-          example: 500
+          example: 409
         message:
           type: string
           example: Something went wrong
-        data:
+        error:
           type: string
-          example: Error details
+          example: Email in use

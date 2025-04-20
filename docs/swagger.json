@@ -43,7 +43,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/user"
+                "$ref": "#/components/schemas/userRegister"
               }
             }
           }
@@ -67,16 +67,27 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Registration successful"
+                      "example": "Successfully registered a user!"
                     },
                     "data": {
                       "type": "object",
+                      "required": [
+                        "id",
+                        "name",
+                        "email"
+                      ],
                       "properties": {
-                        "accessToken": {
-                          "type": "string"
+                        "id": {
+                          "type": "string",
+                          "example": "6804e75dabb924578f1b79a1"
                         },
-                        "refreshToken": {
-                          "type": "string"
+                        "name": {
+                          "type": "string",
+                          "example": "test_user_1"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "test_user_1@example.com"
                         }
                       }
                     }
@@ -84,6 +95,15 @@
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/400_register"
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -251,6 +271,66 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "No active session found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "No active session found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token expired or invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Token expired or invalid, user logged out"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Failed to log out"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -379,6 +459,30 @@
       }
     },
     "schemas": {
+      "userRegister": {
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "test_user_1"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "test_user_1@example.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "example": "testPassword123"
+          }
+        }
+      },
       "user": {
         "type": "object",
         "required": [
@@ -395,6 +499,93 @@
             "type": "string",
             "format": "password",
             "example": "strongPassword123"
+          }
+        }
+      }
+    },
+    "responses": {
+      "409": {
+        "description": "Conflict - User already exists",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "error"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 409
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Something went wrong"
+                },
+                "error": {
+                  "type": "string",
+                  "example": "Email in use"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Something went wrong"
+                },
+                "data": {
+                  "type": "string",
+                  "example": "Error details"
+                }
+              }
+            }
+          }
+        }
+      },
+      "400_register": {
+        "description": "Bad Request - Registration validation error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Something went wrong"
+                },
+                "data": {
+                  "type": "string",
+                  "example": "\"email\" is required, \"emai\" is not allowed"
+                }
+              }
+            }
           }
         }
       }
