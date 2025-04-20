@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import { CATEGORIES } from '../../constants/index.js';
 
 const transactionSchema = new Schema(
   {
@@ -21,9 +22,7 @@ const transactionSchema = new Schema(
       required: function () {
         return this.type === 'expense';
       },
-      enum: [
-     ...CATEGORIES
-      ],
+      enum: [...CATEGORIES],
     },
     value: {
       type: Number,
@@ -40,6 +39,5 @@ const transactionSchema = new Schema(
     timestamps: true,
   },
 );
-
 
 export const Transaction = model('Transactions', transactionSchema);
