@@ -28,11 +28,26 @@ responses:
               example: 201
             message:
               type: string
-              example: Registration successful
+              example: Successfully registered a user!
             data:
               type: object
+              required:
+                - id
+                - name
+                - email
               properties:
-                accessToken:
+                id:
                   type: string
-                refreshToken:
+                  example: 6804e75dabb924578f1b79a1
+                name:
                   type: string
+                  example: test_user_1
+                email:
+                  type: string
+                  example: test_user_1@example.com
+  '400':
+    $ref: ../../../components/responses/400_register.yaml
+  '409':
+    $ref: ../../../components/responses/409.yaml
+  '500':
+    $ref: ../../../components/responses/500.yaml

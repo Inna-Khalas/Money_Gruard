@@ -1,13 +1,17 @@
 type: object
 required:
+  - name
   - email
   - password
 properties:
+  name:
+    type: string
+    example: test_user_1
   email:
     type: string
     format: email
-    example: user@example.com
+    example: test_user_1@example.com
   password:
     type: string
     format: password
-    example: strongPassword123
+    example: testPassword123
