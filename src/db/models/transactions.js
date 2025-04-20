@@ -1,6 +1,5 @@
-import mongoose from 'mongoose';
-
-const { Schema } = mongoose;
+import { Schema, model } from 'mongoose';
+import { CATEGORIES } from '../../constants/index.js';
 
 const transactionSchema = new Schema(
   {
@@ -23,18 +22,7 @@ const transactionSchema = new Schema(
       required: function () {
         return this.type === 'expense';
       },
-      enum: [
-        'Main expenses',
-        'Products',
-        'Car',
-        'Self care',
-        'Child care',
-        'Household products',
-        'Education',
-        'Leisure',
-        'Other expenses',
-        'Entertainment',
-      ],
+      enum: [...CATEGORIES],
     },
     value: {
       type: Number,
@@ -52,4 +40,4 @@ const transactionSchema = new Schema(
   },
 );
 
-export const Transaction = mongoose.model('Transactions', transactionSchema);
+export const Transaction = model('Transactions', transactionSchema);

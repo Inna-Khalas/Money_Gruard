@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
-import UsersCollections from '../db/models/user.js';
-
+import { UsersCollections } from '../db/models/user.js';
 
 export const authMiddleware = async (req, res, next) => {
   const authHeader = req.headers.authorization || '';
@@ -21,6 +20,8 @@ export const authMiddleware = async (req, res, next) => {
     req.user = user;
     next();
   } catch (err) {
+    console.log(err);
+
     res.status(401).json({ message: 'Invalid token' });
   }
 };
