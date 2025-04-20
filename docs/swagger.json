@@ -43,7 +43,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/user"
+                "$ref": "#/components/schemas/userRegister"
               }
             }
           }
@@ -459,6 +459,30 @@
       }
     },
     "schemas": {
+      "userRegister": {
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "test_user_1"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "test_user_1@example.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "example": "testPassword123"
+          }
+        }
+      },
       "user": {
         "type": "object",
         "required": [
