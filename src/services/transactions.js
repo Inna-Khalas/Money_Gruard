@@ -11,10 +11,10 @@ export const createTransaction = async (payload) => {
 
 // Put transaction
 
-export const updateTransaction = async (transId, payload) => {
-  return await Transaction.findOneAndUpdate({ _id: transId }, payload, {
-    new: true,
-  });
+export const updateTransaction = async (transId, ownerId, payload) => { 
+    return await Transaction.findOneAndUpdate(
+        { _id: transId, owner: ownerId }, payload, { new: true }
+    );
 };
 
 // Delete transactions

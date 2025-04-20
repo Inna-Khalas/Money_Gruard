@@ -1,0 +1,88 @@
+tags:
+  - Transactions
+summary: Put transaction by id
+operationId: putTransaction
+description: Put transaction by id
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: 643d4a5d59f1c5a35c7d91e1
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          comment:
+            type: string
+            example: 'Weekly grocery shopping'
+          type:
+            type: string
+            enum: [expense, income]
+            default: income
+          category:
+            type: string
+            enum:
+              - Main expenses
+              - Products
+              - Car
+              - Self care
+              - Child care
+              - Household products
+              - Education
+              - Leisure
+              - Other expenses
+              - Entertainment
+          value:
+            type: number
+            minimum: 0
+            example: 250.5
+          date:
+            type: string
+            format: date-time
+            example: '2025-04-18T18:00:00Z'
+responses:
+  '200':
+    description: Put transaction by id
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully put a transaction!
+            data:
+              $ref: ../../components/schemas/transactions.yaml
+  '401':
+    $ref: ../../components/responses/401.yaml
+  '404':
+    description: Transaction not found
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: Transaction not found
+  '500':
+    $ref: ../../components/responses/500.yaml

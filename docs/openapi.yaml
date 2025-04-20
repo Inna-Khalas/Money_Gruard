@@ -30,6 +30,8 @@ paths:
   /transactions:
     post:
       $ref: '../swagger/paths/transactions/post.yaml'
+    put:
+      $ref: '../swagger/paths/transactions/putTransactions.yaml'
 
 components:
   securitySchemes:
