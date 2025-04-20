@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
 import { UsersCollections } from '../db/models/user.js';
 
+// register
+
 export const registerUser = async (name, email, password) => {
   const existingUser = await UsersCollections.findOne({ email });
   if (existingUser) {
@@ -16,4 +18,11 @@ export const registerUser = async (name, email, password) => {
   });
 
   return newUser;
+};
+
+// logout
+
+export const logoutUser = async (res) => {
+  res.clearCookie('access_token');
+  res.clearCookie('refresh_token');
 };
