@@ -1,9 +1,9 @@
 import { Router } from 'express';  
-import { deleteTransaction } from '../controllers/transactions/deleteTransactionController.js';  // поправил импорт (Андрей)
+import { deleteTransaction } from '../controllers/transactions/deleteTransactionController.js';  
+import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 const router = Router();
 
+router.delete('/transactions/:id', ctrlWrapper(deleteTransaction));
 
-router.delete('/transactions/:id', deleteTransaction);
-
-export default router;  
+export default router;
