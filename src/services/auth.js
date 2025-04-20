@@ -1,3 +1,4 @@
+import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
 import { UsersCollections } from '../db/models/user.js';
 
@@ -6,7 +7,9 @@ import { UsersCollections } from '../db/models/user.js';
 export const registerUser = async (name, email, password) => {
   const existingUser = await UsersCollections.findOne({ email });
   if (existingUser) {
-    throw new Error('Email in use');
+    throw createHttpError(409, 'Something went wrong', {
+      error: 'Email in use',
+    });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
