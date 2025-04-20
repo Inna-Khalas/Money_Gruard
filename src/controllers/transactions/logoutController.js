@@ -1,3 +1,4 @@
+
 import { logoutUser } from '../../services/authServicelogout.js';
 
 export const logout = async (req, res) => {

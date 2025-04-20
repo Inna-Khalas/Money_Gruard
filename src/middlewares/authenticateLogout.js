@@ -14,7 +14,7 @@ if (!JWT_ACCESS_SECRET) {
 }
 
 
-export const logout = (req, res, next) => {
+export const verifyToken = (req, res, next) => { // изменил название константы
   const token = req.cookies.access_token;  
 
   if (!token) {

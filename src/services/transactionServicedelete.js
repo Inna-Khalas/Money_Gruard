@@ -1,4 +1,4 @@
-import Transaction from '../db/models/transactions.js';
+import { Transaction } from '../db/models/transactions.js'; 
 
 export const removeTransaction = async (id) => {
   const transaction = await Transaction.findByIdAndDelete(id);
