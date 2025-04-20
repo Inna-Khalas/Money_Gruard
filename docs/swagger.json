@@ -462,24 +462,19 @@
       "user": {
         "type": "object",
         "required": [
-          "name",
           "email",
           "password"
         ],
         "properties": {
-          "name": {
-            "type": "string",
-            "example": "test_user_1"
-          },
           "email": {
             "type": "string",
             "format": "email",
-            "example": "test_user_1@example.com"
+            "example": "user@example.com"
           },
           "password": {
             "type": "string",
             "format": "password",
-            "example": "testPassword123"
+            "example": "strongPassword123"
           }
         }
       }
