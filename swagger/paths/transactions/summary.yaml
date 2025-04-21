@@ -1,0 +1,67 @@
+tags:
+  - Transactions
+summary: Get transaction summary for a specific month
+description: Get transaction summary for a specific month
+operationId: getTransactionSummary
+parameters:
+  - in: query
+    name: period
+    schema:
+      type: string
+      pattern: '^\d{4}-\d{2}$'
+    required: true
+    description: Period in format YYYY-MM (e.g., 2025-04)
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    description: Summary for the selected period
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            period:
+              type: string
+              example: '2025-04'
+            total:
+              type: object
+              properties:
+                expense:
+                  type: number
+                  example: 247.5
+                income:
+                  type: number
+                  example: 3650
+            categories:
+              type: object
+              additionalProperties:
+                type: object
+                properties:
+                  expense:
+                    type: number
+                    example: 80.5
+        example:
+          period: '2025-04'
+          total:
+            expense: 247.5
+            income: 3650
+          categories:
+            Products:
+              expense: 107.5
+            Entertainment:
+              expense: 60
+            Car:
+              expense: 80
+  '400':
+    description: Invalid or missing period format
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: Invalid or missing period format (YYYY-MM)
+  '401':
+    description: Unauthorized – missing or invalid token

@@ -1,0 +1,67 @@
+tags:
+  - Transactions
+summary: Delete transaction by ID
+description: Deletes a transaction from the database based on the provided transaction ID.
+operationId: deleteTransaction
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    description: The ID of the transaction to delete
+    schema:
+      type: string
+responses:
+  '200':
+    description: Transaction successfully deleted
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+              example: success
+            message:
+              type: string
+              example: Transaction deleted
+  '400':
+    description: Invalid transaction ID
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+              example: error
+            message:
+              type: string
+              example: Invalid transaction ID
+  '404':
+    description: Transaction not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+              example: error
+            message:
+              type: string
+              example: Transaction not found
+  '500':
+    description: Internal server error
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+              example: error
+            message:
+              type: string
+              example: Failed to delete transaction
