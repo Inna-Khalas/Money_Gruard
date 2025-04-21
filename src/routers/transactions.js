@@ -26,7 +26,7 @@ router.get('/', ctrlWrapper(getTransactionsController));
 
 router.get('/categories', ctrlWrapper(getCategories));
 
-router.get('categories/:id', ctrlWrapper(getCategoryById));
+router.get('/categories/:id', ctrlWrapper(getCategoryById));
 
 router.post(
   '/',

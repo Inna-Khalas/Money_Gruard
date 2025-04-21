@@ -58,15 +58,13 @@ export const getSummary = async (owner, period) => {
   for (const tx of transactions) {
     const { type, category, value } = tx;
 
-    if (!categorySummary[category]) {
-      categorySummary[category] = { expense: 0, income: 0 };
-    }
-
     if (type === 'expense') {
+      if (!categorySummary[category]) {
+        categorySummary[category] = { expense: 0 };
+      }
       categorySummary[category].expense += value;
       totalExpense += value;
     } else if (type === 'income') {
-      categorySummary[category].income += value;
       totalIncome += value;
     }
   }
