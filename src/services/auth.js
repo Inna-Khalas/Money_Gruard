@@ -1,6 +1,8 @@
 import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
 import { UsersCollections } from '../db/models/user.js';
+import { SessionsCollections } from '../db/models/session.js';
+import { createSession } from '../utils/createSession.js';
 
 // register
 
@@ -38,9 +40,9 @@ export const loginUser = async (payload) => {
     throw createHttpError(401, 'Unauthorized');
   }
 
-  await SessionsCollection.deleteOne({ userId: user._id });
+  await SessionsCollections.deleteOne({ userId: user._id });
 
-  return await SessionsCollection.create({
+  return await SessionsCollections.create({
     userId: user._id,
     ...createSession(),
   });
