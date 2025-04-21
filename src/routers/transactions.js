@@ -5,24 +5,28 @@ import {
   putTransactionSchema,
 } from '../validation/transactions.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import getTransactionsController from '../controllers/transactions/getTransaction.js';
 
-import { putTransactionController } from '../controllers/transactions/putTransactions.js';
-// import { authenticate } from '../middlewares/authenticate.js';
+import { authenticate } from '../middlewares/authenticate.js';
 import { isValidID } from '../middlewares/isValidId.js';
-import { getSummaryController } from '../controllers/transactions/getSummary.js';
-import getCategories, {
+import {
+  getCategories,
   createTransactionController,
   deleteTransaction,
+  getCategoryById,
+  getSummaryController,
+  getTransactionsController,
+  putTransactionController,
 } from '../controllers/transactions/transactions.js';
 
 const router = Router();
 
-// router.use(authenticate);
+router.use(authenticate);
 
 router.get('/', ctrlWrapper(getTransactionsController));
 
-router.get('/', ctrlWrapper(getCategories));
+router.get('/categories', ctrlWrapper(getCategories));
+
+router.get('categories/:id', ctrlWrapper(getCategoryById));
 
 router.post(
   '/',
