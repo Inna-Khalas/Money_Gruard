@@ -31,11 +31,19 @@ paths:
       $ref: '../swagger/paths/auth/user/get.yaml'
 
 
+  /transactions/{id}:
+    put:
+      $ref: '../swagger/paths/transactions/{id}/put.yaml'
+    delete:
+      $ref: '../swagger/paths/transactions/{id}/delete.yaml'
+
   /transactions:
     post:
       $ref: '../swagger/paths/transactions/post.yaml'
-    put:
-      $ref: '../swagger/paths/transactions/putTransactions.yaml'
+
+  /summary:
+    get:
+      $ref: '../swagger/paths/transactions/summary.yaml'
 
 components:
   securitySchemes:

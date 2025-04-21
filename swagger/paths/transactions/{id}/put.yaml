@@ -65,9 +65,9 @@ responses:
               type: string
               example: Successfully put a transaction!
             data:
-              $ref: ../../components/schemas/transactions.yaml
+              $ref: ../../../components/schemas/transactions.yaml
   '401':
-    $ref: ../../components/responses/401.yaml
+    $ref: ../../../components/responses/401.yaml
   '404':
     description: Transaction not found
     content:
@@ -85,4 +85,4 @@ responses:
               type: string
               example: Transaction not found
   '500':
-    $ref: ../../components/responses/500.yaml
+    $ref: ../../../components/responses/500.yaml
