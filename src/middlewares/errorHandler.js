@@ -12,10 +12,17 @@ export const errorHandler = (err, _req, res, _next) => {
       });
     }
 
-    return res.status(err.status).json({
+    const response = {
       status: err.status,
       message: err.message || 'Something went wrong',
-    });
+    };
+
+    // Optional detailed error for specific cases like 409 Conflict
+    if (err.error) {
+      response.error = err.error;
+    }
+
+    return res.status(err.status).json(response);
   }
 
   res.status(500).json({
