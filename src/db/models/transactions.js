@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose';
-import { CATEGORIES } from '../../constants/index.js';
 
 const transactionSchema = new Schema(
   {
@@ -18,11 +17,11 @@ const transactionSchema = new Schema(
       default: 'income',
     },
     category: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: 'category',
       required: function () {
         return this.type === 'expense';
       },
-      enum: [...CATEGORIES],
     },
     value: {
       type: Number,
