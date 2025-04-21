@@ -26,6 +26,10 @@ paths:
   /auth/logout:
     post:
       $ref: '../swagger/paths/auth/logout/post.yaml'
+  /auth/user:
+    get:
+      $ref: '../swagger/paths/auth/user/get.yaml'
+
 
   /transactions/{id}:
     put:

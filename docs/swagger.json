@@ -326,6 +326,14 @@
         }
       }
     },
+    "/auth/user": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Get current user info",
+        "operationId": "getUser",
+        "description": "Returns information about the currently authenticated user.",
     "/transactions/{id}": {
       "put": {
         "tags": ["Transactions"],
@@ -457,6 +465,9 @@
             "bearerAuth": []
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved user data",
         "parameters": [
           {
             "in": "path",
@@ -476,6 +487,25 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "661f90c3be3f1c286a953129"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Tetiana"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "tanya@example.com"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
                     "status": {
                       "type": "string",
                       "example": "success"
@@ -657,6 +687,138 @@
             "description": "Bad Request"
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Put transaction by id",
+        "operationId": "putTransaction",
+        "description": "Put transaction by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "643d4a5d59f1c5a35c7d91e1"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "comment": {
+                    "type": "string",
+                    "example": "Weekly grocery shopping"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "expense",
+                      "income"
+                    ],
+                    "default": "income"
+                  },
+                  "category": {
+                    "type": "string",
+                    "enum": [
+                      "Main expenses",
+                      "Products",
+                      "Car",
+                      "Self care",
+                      "Child care",
+                      "Household products",
+                      "Education",
+                      "Leisure",
+                      "Other expenses",
+                      "Entertainment"
+                    ]
+                  },
+                  "value": {
+                    "type": "number",
+                    "minimum": 0,
+                    "example": 250.5
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-04-18T18:00:00Z"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Put transaction by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully put a transaction!"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/transactions"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "Transaction not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Transaction not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
       }
     },
     "/summary": {
@@ -831,6 +993,11 @@
           "type": {
             "type": "string",
             "description": "Type of the transaction — either income or expense",
+            "enum": [
+              "income",
+              "expense"
+            ],
+=======
             "enum": ["income", "expense"],
             "example": "expense"
           },
@@ -876,6 +1043,15 @@
             "example": "2024-04-17T15:23:00.000Z"
           }
         },
+        "required": [
+          "owner",
+          "type",
+          "value",
+          "date"
+        ]
+      }
+    },
+    "responses": {
         "required": ["owner", "type", "value", "date"]
       }
     },
@@ -910,6 +1086,12 @@
           "application/json": {
             "schema": {
               "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+
               "required": ["status", "message", "data"],
               "properties": {
                 "status": {
@@ -922,6 +1104,10 @@
                 },
                 "data": {
                   "type": "object",
+                  "required": [
+                    "message"
+                  ],
+
                   "required": ["message"],
                   "properties": {
                     "message": {
