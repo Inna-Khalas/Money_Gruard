@@ -1,11 +1,10 @@
-import mongoose from 'mongoose';
 import {
   getTransactions,
   transactionFilters,
 } from '../../services/getTransactions.js';
 
 const getTransactionsController = async (req, res) => {
-  const userId = new mongoose.Types.ObjectId('680392deb4ce81757858c61e'); // Используйте req.user._id в реальном приложении
+  const userId = '680392deb4ce81757858c61e'; // в основной базе будет req.user._id
 
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
