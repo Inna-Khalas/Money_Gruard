@@ -18,7 +18,7 @@ const transactionSchema = new Schema(
     },
     category: {
       type: Schema.Types.ObjectId,
-      ref: 'category',
+      ref: 'Category',
       required: function () {
         return this.type === 'expense';
       },
