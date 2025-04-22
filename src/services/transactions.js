@@ -70,11 +70,18 @@ export const getSummary = async (owner, period) => {
     }
   }
 
+  const total = Number(totalIncome - totalExpense);
+
+  // if (totalIncome < totalExpense) {
+  //   throw new Error('there are not enough funds on your balance');
+  // }
+
   return {
     period,
     total: {
       expense: totalExpense,
       income: totalIncome,
+      total,
     },
     categories: categorySummary,
   };

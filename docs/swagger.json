@@ -391,6 +391,7 @@
         }
       }
     },
+
     "/auth/user/{id}": {
       "patch": {
         "tags": [
@@ -493,6 +494,7 @@
         }
       }
     },
+    
     "/transactions/{id}": {
       "put": {
         "tags": [
