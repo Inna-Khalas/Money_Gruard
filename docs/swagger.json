@@ -11,8 +11,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000",
-      "url": "https://money-guard-backend-xmem.onrender.com"
+      "url": "http://localhost:3000"
     }
   ],
   "tags": [
@@ -28,7 +27,9 @@
   "paths": {
     "/auth/register": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "register a new user",
         "description": "Creates a new user with email and password",
         "operationId": "registerUser",
@@ -54,7 +55,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -66,7 +71,11 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": ["id", "name", "email"],
+                      "required": [
+                        "id",
+                        "name",
+                        "email"
+                      ],
                       "properties": {
                         "id": {
                           "type": "string",
@@ -101,7 +110,9 @@
     },
     "/auth/login": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "login user",
         "description": "Authenticates user and returns tokens",
         "operationId": "loginUser",
@@ -127,7 +138,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -164,7 +179,9 @@
     },
     "/auth/refresh": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "refresh tokens",
         "description": "Get new access and refresh tokens using refresh token",
         "operationId": "refreshToken",
@@ -179,7 +196,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["refreshToken"],
+                "required": [
+                  "refreshToken"
+                ],
                 "properties": {
                   "refreshToken": {
                     "type": "string",
@@ -233,7 +252,9 @@
     },
     "/auth/logout": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "logout user",
         "description": "Logs out user and invalidates session",
         "operationId": "logoutUser",
@@ -334,132 +355,6 @@
         "summary": "Get current user info",
         "operationId": "getUser",
         "description": "Returns information about the currently authenticated user.",
-    "/transactions/{id}": {
-      "put": {
-        "tags": ["Transactions"],
-        "summary": "Put transaction by id",
-        "operationId": "putTransaction",
-        "description": "Put transaction by id",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "643d4a5d59f1c5a35c7d91e1"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "comment": {
-                    "type": "string",
-                    "example": "Weekly grocery shopping"
-                  },
-                  "type": {
-                    "type": "string",
-                    "enum": ["expense", "income"],
-                    "default": "income"
-                  },
-                  "category": {
-                    "type": "string",
-                    "enum": [
-                      "Main expenses",
-                      "Products",
-                      "Car",
-                      "Self care",
-                      "Child care",
-                      "Household products",
-                      "Education",
-                      "Leisure",
-                      "Other expenses",
-                      "Entertainment"
-                    ]
-                  },
-                  "value": {
-                    "type": "number",
-                    "minimum": 0,
-                    "example": 250.5
-                  },
-                  "date": {
-                    "type": "string",
-                    "format": "date-time",
-                    "example": "2025-04-18T18:00:00Z"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Put transaction by id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": ["status", "message", "data"],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully put a transaction!"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/transactions"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "description": "Transaction not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": ["status", "message"],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 404
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Transaction not found"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Transactions"],
-        "summary": "Delete transaction by ID",
-        "description": "Deletes a transaction from the database based on the provided transaction ID.",
-        "operationId": "deleteTransaction",
         "security": [
           {
             "bearerAuth": []
@@ -468,20 +363,6 @@
         "responses": {
           "200": {
             "description": "Successfully retrieved user data",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "description": "The ID of the transaction to delete",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Transaction successfully deleted",
             "content": {
               "application/json": {
                 "schema": {
@@ -506,33 +387,100 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
-                    "status": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Transaction deleted"
-                    }
+          }
+        }
+      }
+    },
+    "/auth/user/{id}": {
+      "patch": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Update user profile with name and avatar",
+        "operationId": "updateUser",
+        "description": "Allows a user to update their profile information, including their name and avatar image.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Osk"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
                   }
                 }
               }
             }
-          },
-          "400": {
-            "description": "Invalid transaction ID",
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully patched a user!",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
-                      "type": "string",
-                      "example": "error"
+                      "type": "integer",
+                      "example": 200
                     },
                     "message": {
                       "type": "string",
-                      "example": "Invalid transaction ID"
+                      "example": "Successfully updated the user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "_id",
+                        "name",
+                        "email",
+                        "avatar"
+                      ],
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "6807769c2362eec8277ceacb"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Osk"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "Osk@example.com"
+                        },
+                        "avatar": {
+                          "type": "string",
+                          "example": "https://res.cloudinary.com/dw3qjido8/image/upload/v1743113771/zo6dstqb..."
+                        }
+                      }
                     }
                   }
                 }
@@ -540,154 +488,12 @@
             }
           },
           "404": {
-            "description": "Transaction not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "error"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Transaction not found"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "error"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Failed to delete transaction"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404"
           }
         }
       }
     },
-    "/transactions": {
-      "post": {
-        "tags": ["Transactions"],
-        "summary": "Create a new transaction",
-        "description": "Creates a new income or expense transaction.",
-        "operationId": "createTransaction",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "comment": {
-                    "type": "string",
-                    "example": "Weekly grocery shopping"
-                  },
-                  "type": {
-                    "type": "string",
-                    "enum": ["expense", "income"],
-                    "default": "income"
-                  },
-                  "category": {
-                    "type": "string",
-                    "enum": [
-                      "Main expenses",
-                      "Products",
-                      "Car",
-                      "Self care",
-                      "Child care",
-                      "Household products",
-                      "Education",
-                      "Leisure",
-                      "Other expenses",
-                      "Entertainment"
-                    ]
-                  },
-                  "value": {
-                    "type": "number",
-                    "minimum": 0,
-                    "example": 250.5
-                  },
-                  "date": {
-                    "type": "string",
-                    "format": "date-time",
-                    "example": "2025-04-18T18:00:00Z"
-                  }
-                },
-                "required": ["value", "date"]
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Transaction created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "string"
-                    },
-                    "type": {
-                      "type": "string"
-                    },
-                    "category": {
-                      "type": "string"
-                    },
-                    "value": {
-                      "type": "number"
-                    },
-                    "date": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "comment": {
-                      "type": "string"
-                    },
-                    "owner": {
-                      "type": "string"
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "updatedAt": {
-                      "type": "string",
-                      "format": "date-time"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      },
+    "/transactions/{id}": {
       "put": {
         "tags": [
           "Transactions"
@@ -819,11 +625,234 @@
             "$ref": "#/components/responses/500"
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Delete transaction by ID",
+        "description": "Deletes a transaction from the database based on the provided transaction ID.",
+        "operationId": "deleteTransaction",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the transaction to delete",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Transaction deleted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid transaction ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid transaction ID"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Transaction not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Transaction not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Failed to delete transaction"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions": {
+      "post": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Create a new transaction",
+        "description": "Creates a new income or expense transaction.",
+        "operationId": "createTransaction",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "comment": {
+                    "type": "string",
+                    "example": "Weekly grocery shopping"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "expense",
+                      "income"
+                    ],
+                    "default": "income"
+                  },
+                  "category": {
+                    "type": "string",
+                    "enum": [
+                      "Main expenses",
+                      "Products",
+                      "Car",
+                      "Self care",
+                      "Child care",
+                      "Household products",
+                      "Education",
+                      "Leisure",
+                      "Other expenses",
+                      "Entertainment"
+                    ]
+                  },
+                  "value": {
+                    "type": "number",
+                    "minimum": 0,
+                    "example": 250.5
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-04-18T18:00:00Z"
+                  }
+                },
+                "required": [
+                  "value",
+                  "date"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Transaction created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "number"
+                    },
+                    "date": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "comment": {
+                      "type": "string"
+                    },
+                    "owner": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
       }
     },
     "/summary": {
       "get": {
-        "tags": ["Transactions"],
+        "tags": [
+          "Transactions"
+        ],
         "summary": "Get transaction summary for a specific month",
         "description": "Get transaction summary for a specific month",
         "operationId": "getTransactionSummary",
@@ -937,7 +966,11 @@
     "schemas": {
       "userRegister": {
         "type": "object",
-        "required": ["name", "email", "password"],
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
         "properties": {
           "name": {
             "type": "string",
@@ -957,7 +990,10 @@
       },
       "user": {
         "type": "object",
-        "required": ["email", "password"],
+        "required": [
+          "email",
+          "password"
+        ],
         "properties": {
           "email": {
             "type": "string",
@@ -997,8 +1033,6 @@
               "income",
               "expense"
             ],
-=======
-            "enum": ["income", "expense"],
             "example": "expense"
           },
           "category": {
@@ -1052,17 +1086,16 @@
       }
     },
     "responses": {
-        "required": ["owner", "type", "value", "date"]
-      }
-    },
-    "responses": {
       "400": {
         "description": "Bad Request - Failed to create transaction",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message"],
+              "required": [
+                "status",
+                "message"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1091,8 +1124,6 @@
                 "message",
                 "data"
               ],
-
-              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1107,8 +1138,6 @@
                   "required": [
                     "message"
                   ],
-
-                  "required": ["message"],
                   "properties": {
                     "message": {
                       "type": "string",
@@ -1121,13 +1150,40 @@
           }
         }
       },
+      "404": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Contact not found."
+                },
+                "data": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
       "409": {
         "description": "Conflict - User already exists",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message", "error"],
+              "required": [
+                "status",
+                "message",
+                "error"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1151,7 +1207,11 @@
         "content": {
           "application/json": {
             "schema": {
-              "required": ["status", "message", "data"],
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1176,7 +1236,10 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message"],
+              "required": [
+                "status",
+                "message"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",

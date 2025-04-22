@@ -29,7 +29,9 @@ paths:
   /auth/user:
     get:
       $ref: '../swagger/paths/auth/user/get.yaml'
-
+  /auth/user/{id}:
+    patch:
+      $ref: '../swagger/paths/auth/user/patch.yaml'
 
   /transactions/{id}:
     put:

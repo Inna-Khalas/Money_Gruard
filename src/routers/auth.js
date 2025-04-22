@@ -1,14 +1,24 @@
 import { Router } from 'express';
 import { validateBody } from '../middlewares/validateBody.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import { registerSchema, loginUserSchema } from '../validation/auth.js';
-import { getCurrentUser } from '../controllers/userControllers.js';
+import {
+  registerSchema,
+  loginUserSchema,
+  updateUserSchema,
+} from '../validation/auth.js';
+import {
+  getCurrentUser,
+  patchUserController,
+} from '../controllers/userControllers.js';
 import {
   loginUserController,
   logoutUserController,
   registerUserController,
 } from '../controllers/auth/auth.js';
 import { verifyToken } from '../middlewares/authenticateLogout.js';
+import { isValidID } from '../middlewares/isValidId.js';
+import { upload } from '../middlewares/multer.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
 const router = Router();
 
@@ -26,6 +36,14 @@ router.post(
 
 router.post('/logout', verifyToken, ctrlWrapper(logoutUserController));
 
-router.get('/user', ctrlWrapper(getCurrentUser));
+router.get('/user', authenticate, ctrlWrapper(getCurrentUser));
+
+router.patch(
+  '/user/:id',
+  isValidID,
+  upload.single('avatar'),
+  validateBody(updateUserSchema),
+  ctrlWrapper(patchUserController),
+);
 
 export default router;
