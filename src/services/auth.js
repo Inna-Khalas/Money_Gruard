@@ -54,3 +54,17 @@ export const logoutUser = async (res) => {
   res.clearCookie('access_token');
   res.clearCookie('refresh_token');
 };
+
+// Update User
+
+export const updateUser = async (id, payload = {}) => {
+  const rawResult = await UsersCollections.findByIdAndUpdate(id, payload, {
+    new: true,
+  });
+
+  if (!rawResult) {
+    return null;
+  }
+
+  return rawResult;
+};
