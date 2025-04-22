@@ -1,11 +1,13 @@
 tags:
-  - Categories
+  - Transactions
 summary: Get all transaction categories
 description: Returns an array of transaction categories.
 operationId: getCategories
+security:
+  - bearerAuth: []
 responses:
   '200':
-    description: Successfully retrieved the list of categories.
+    description: Successfully retrieved the list of categories
     content:
       application/json:
         schema:
@@ -21,11 +23,15 @@ responses:
                 properties:
                   name:
                     type: string
+                    description: The name of the category (e.g., "main expenses", "products", etc.)
                     example: main expenses
                   type:
                     type: string
+                    description: Defines whether the category is for an expense or income
                     enum: [expense, income]
                     example: expense
+  '401':
+    $ref: ../../components/responses/401.yaml
   '500':
     description: Server error while retrieving categories
     content:

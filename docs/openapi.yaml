@@ -49,7 +49,7 @@ paths:
 
   /transactions/categories:
     get:
-      $ref: '../swagger/paths/transactions/categories/getCategories.yaml'
+      $ref: '../swagger/paths/transactions/categories.yaml'
 
 components:
   securitySchemes:
