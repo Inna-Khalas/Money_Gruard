@@ -33,6 +33,10 @@ paths:
     put:
       $ref: '../swagger/paths/transactions/putTransactions.yaml'
 
+  /transactions/categories:
+    get:
+      $ref: '../swagger/paths/transactions/categories/getCategories.yaml'
+
 components:
   securitySchemes:
     bearerAuth:
