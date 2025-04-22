@@ -1,4 +1,4 @@
-import { CATEGORIES } from '../constants/index.js';
+import { CategoryCollection } from '../db/models/category.js';
 import { Transaction } from '../db/models/transactions.js';
 
 // Get transactions
@@ -32,7 +32,8 @@ export const removeTransaction = async (id) => {
 
 export const getCategoriesService = async () => {
   try {
-    return CATEGORIES;
+    const categories = await CategoryCollection.find({}, { name: 1, type: 1, _id: 0 });
+    return categories;
   } catch (error) {
     console.error('Error in getCategoriesService:', error.message);
     throw new Error('Failed to retrieve categories');

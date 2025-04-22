@@ -29,7 +29,9 @@ paths:
   /auth/user:
     get:
       $ref: '../swagger/paths/auth/user/get.yaml'
-
+  /auth/user/{id}:
+    patch:
+      $ref: '../swagger/paths/auth/user/patch.yaml'
 
   /transactions/{id}:
     put:
@@ -44,6 +46,10 @@ paths:
   /summary:
     get:
       $ref: '../swagger/paths/transactions/summary.yaml'
+
+  /transactions/categories:
+    get:
+      $ref: '../swagger/paths/transactions/categories/getCategories.yaml'
 
 components:
   securitySchemes:
