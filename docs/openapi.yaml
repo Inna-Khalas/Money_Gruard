@@ -45,6 +45,10 @@ paths:
     get:
       $ref: '../swagger/paths/transactions/summary.yaml'
 
+  /transactions/categories:
+    get:
+      $ref: '../swagger/paths/transactions/categories/getCategories.yaml'
+
 components:
   securitySchemes:
     bearerAuth:
