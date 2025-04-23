@@ -391,7 +391,6 @@
         }
       }
     },
-
     "/auth/user/{id}": {
       "patch": {
         "tags": [
@@ -494,7 +493,6 @@
         }
       }
     },
-    
     "/transactions/{id}": {
       "put": {
         "tags": [
@@ -848,6 +846,222 @@
             "description": "Bad Request"
           }
         }
+      },
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Get a list of transactions",
+        "description": "Returns a paginated list of user transactions with optional filters and sorting.",
+        "operationId": "getTransactions",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number for pagination",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of transactions per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "name": "minValue",
+            "in": "query",
+            "description": "Minimum value of transaction",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "maxValue",
+            "in": "query",
+            "description": "Maximum value of transaction",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Filter by transaction type (income or expense)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "income",
+                "expense"
+              ]
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Filter by transaction category",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "Filter transactions starting from this date",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "Filter transactions up to this date",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Field to sort by",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "value",
+                "type",
+                "date",
+                "category"
+              ]
+            }
+          },
+          {
+            "name": "sortOrder",
+            "in": "query",
+            "description": "Sort direction",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of transactions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "200"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Transactions successfully found"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/transactions"
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "totalTransactions": {
+                          "type": "integer",
+                          "example": 25
+                        },
+                        "currentPage": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "totalPages": {
+                          "type": "integer",
+                          "example": 3
+                        },
+                        "limit": {
+                          "type": "integer",
+                          "example": 10
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No transactions found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "404"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Transactions not found"
+                    },
+                    "data": {
+                      "type": "array",
+                      "example": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error - Internal error occurred on the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "500"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error occurred. Please try again later."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/summary": {
@@ -957,7 +1171,7 @@
         }
       }
     },
-    "/transaction/categories": {
+    "/transactions/categories": {
       "get": {
         "tags": [
           "Transactions"
