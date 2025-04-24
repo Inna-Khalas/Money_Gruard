@@ -12,6 +12,9 @@
   "servers": [
     {
       "url": "http://localhost:3000"
+    },
+    {
+      "url": "https://money-guard-backend-xmem.onrender.com"
     }
   ],
   "tags": [
@@ -1064,7 +1067,7 @@
         }
       }
     },
-    "/summary": {
+    "/transactions/summary": {
       "get": {
         "tags": [
           "Transactions"
