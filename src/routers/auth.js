@@ -13,7 +13,7 @@ import {
 import {
   loginUserController,
   logoutUserController,
-  refreshSessionController,
+  // refreshSessionController,
   registerUserController,
 } from '../controllers/auth/auth.js';
 import { verifyToken } from '../middlewares/authenticateLogout.js';
@@ -37,7 +37,7 @@ router.post(
 
 router.post('/logout', verifyToken, ctrlWrapper(logoutUserController));
 
-router.post('/refresh', ctrlWrapper(refreshSessionController));
+// router.post('/refresh', ctrlWrapper(refreshSessionController));
 
 router.get('/user', authenticate, ctrlWrapper(getCurrentUser));
 
