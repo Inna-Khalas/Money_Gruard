@@ -24,7 +24,7 @@ const categorySchema = new Schema(
     },
     type: {
       type: String,
-      enum: ['expense', 'income'],
+      enum: ['expense'],
       required: true,
     },
     description: {
@@ -36,15 +36,21 @@ const categorySchema = new Schema(
       default: true,
     },
   },
-  { versionKey: false, timestamps: true }
+  { versionKey: false, timestamps: true },
 );
 
-categorySchema.index({ name: 1, type: 1 }, { unique: true });
+const CategoryCollection = model('Category', categorySchema);
 
-categorySchema.statics.findByType = function (type) {
-  return this.find({ type });
-};
+(async () => {
+  const count = await CategoryCollection.countDocuments({ type: 'expense' });
+  if (count === 0) {
+    await CategoryCollection.insertMany(
+      CATEGORIES.map((name) => ({
+        name,
+        type: 'expense',
+      })),
+    );
+  }
+})();
 
-categorySchema.statics.DEFAULT_EXPENSE_CATEGORIES = CATEGORIES;
-
-export const CategoryCollection = model('Category', categorySchema);
+export { CategoryCollection };
