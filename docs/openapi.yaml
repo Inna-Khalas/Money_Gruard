@@ -34,25 +34,25 @@ paths:
     patch:
       $ref: '../swagger/paths/auth/user/patch.yaml'
 
-  /transactions/{id}:
-    put:
-      $ref: '../swagger/paths/transactions/{id}/put.yaml'
-    delete:
-      $ref: '../swagger/paths/transactions/{id}/delete.yaml'
-
   /transactions:
-    post:
-      $ref: '../swagger/paths/transactions/post.yaml'
     get:
       $ref: '../swagger/paths/transactions/get.yaml'
+    post:
+      $ref: '../swagger/paths/transactions/post.yaml'
+
+  /transactions/categories:
+    get:
+      $ref: '../swagger/paths/transactions/categories.yaml'
 
   /transactions/summary:
     get:
       $ref: '../swagger/paths/transactions/summary.yaml'
 
-  /transactions/categories:
-    get:
-      $ref: '../swagger/paths/transactions/categories.yaml'
+  /transactions/{id}:
+    put:
+      $ref: '../swagger/paths/transactions/{id}/put.yaml'
+    delete:
+      $ref: '../swagger/paths/transactions/{id}/delete.yaml'
 
 components:
   securitySchemes:
