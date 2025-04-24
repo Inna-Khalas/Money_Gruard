@@ -6,6 +6,16 @@ import { Transaction } from '../db/models/transactions.js';
 // Create a new transaction
 
 export const createTransaction = async (payload) => {
+  if (payload.type === 'expense' && typeof payload.category === 'string') {
+    const categories = await CategoryCollection.findOne({
+      name: payload.category.toLowerCase(),
+      type: 'expense',
+    });
+    if (!categories) {
+      throw new Error(`${payload.category} not found!`);
+    }
+    payload.category = categories._id;
+  }
   return await Transaction.create(payload);
 };
 
@@ -32,7 +42,10 @@ export const removeTransaction = async (id) => {
 
 export const getCategoriesService = async () => {
   try {
-    const categories = await CategoryCollection.find({}, { name: 1, type: 1, _id: 0 });
+    const categories = await CategoryCollection.find(
+      {},
+      { name: 1, type: 1, _id: 0 },
+    );
     return categories;
   } catch (error) {
     console.error('Error in getCategoriesService:', error.message);
@@ -106,6 +119,10 @@ const getTransactions = async (
     }
 
     const transactions = await Transaction.find({ owner: userId, ...filters })
+      .populate({
+        path: 'category',
+        select: 'name -_id',
+      })
       .skip(skip)
       .limit(limit)
       .sort(sortOptions);
