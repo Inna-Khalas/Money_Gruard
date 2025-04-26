@@ -1,7 +1,7 @@
 import {
   loginUser,
   logoutUser,
-  // refreshSession,
+  refreshSession,
   registerUser,
 } from '../../services/auth.js';
 import { setUpSession } from '../../utils/setUpSession.js';
@@ -49,29 +49,19 @@ export const logoutUserController = async (req, res) => {
   res.status(500).json({ status: 'error', message: 'Failed to log out' });
 };
 
-// export const refreshSessionController = async (req, res) => {
-//   const { name, email } = req.user;
+export const refreshSessionController = async (req, res) => {
+  const { sessionId, refreshToken } = req.body;
+  const session = await refreshSession({
+    sessionId,
+    refreshToken,
+  });
 
-//   res.json({
-//     name,
-//     email,
-//   });
-// };
-
-// export const refreshSessionController = async (req, res) => {
-//   const { sessionId, refreshToken } = req.body;
-//   const session = await refreshSession({
-//     sessionId,
-//     refreshToken,
-//   });
-
-//   // setUpSession(res, session);
-
-//   res.status(200).json({
-//     status: 200,
-//     message: 'Successfully refreshed a session!',
-//     data: {
-//       accessToken: session.accessToken,
-//     },
-//   });
-// };
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully refreshed a session!',
+    data: {
+      accessToken: session.accessToken,
+      refreshToken: session.refreshToken,
+    },
+  });
+};

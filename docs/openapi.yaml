@@ -27,10 +27,10 @@ paths:
   /auth/logout:
     post:
       $ref: '../swagger/paths/auth/logout/post.yaml'
-  /auth/user:
+  /auth/carrent/user:
     get:
       $ref: '../swagger/paths/auth/user/get.yaml'
-  /auth/user/{id}:
+  /auth/user:
     patch:
       $ref: '../swagger/paths/auth/user/patch.yaml'
 
@@ -40,9 +40,9 @@ paths:
     post:
       $ref: '../swagger/paths/transactions/post.yaml'
 
-  /transactions/categories:
+  /categories:
     get:
-      $ref: '../swagger/paths/transactions/categories.yaml'
+      $ref: '../swagger/paths/categories/categories.yaml'
 
   /transactions/summary:
     get:

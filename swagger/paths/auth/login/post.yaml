@@ -4,7 +4,7 @@ summary: login user
 description: Authenticates user and returns tokens
 operationId: loginUser
 security:
-  - bearerAuth: []
+  - {}
 requestBody:
   required: true
   content:

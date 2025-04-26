@@ -43,6 +43,8 @@ requestBody:
         required:
           - value
           - date
+          - type
+          - category
 responses:
   '201':
     description: Transaction created successfully
