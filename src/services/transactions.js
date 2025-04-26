@@ -63,6 +63,9 @@ export const getSummary = async (owner, period) => {
   const transactions = await Transaction.find({
     owner,
     date: { $gte: startDate, $lt: endDate },
+  }).populate({
+    path: 'category',
+    select: 'name -_id',
   });
 
   const categorySummary = {};
@@ -73,10 +76,10 @@ export const getSummary = async (owner, period) => {
     const { type, category, value } = tx;
 
     if (type === 'expense') {
-      if (!categorySummary[category]) {
-        categorySummary[category] = { expense: 0 };
+      if (!categorySummary[category?.name]) {
+        categorySummary[category?.name] = { expense: 0 };
       }
-      categorySummary[category].expense += value;
+      categorySummary[category?.name].expense += value;
       totalExpense += value;
     } else if (type === 'income') {
       totalIncome += value;
@@ -91,11 +94,9 @@ export const getSummary = async (owner, period) => {
 
   return {
     period,
-    total: {
-      expense: totalExpense,
-      income: totalIncome,
-      total,
-    },
+    expense: totalExpense,
+    income: totalIncome,
+    total,
     categories: categorySummary,
   };
 };

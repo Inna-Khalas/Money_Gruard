@@ -4,7 +4,7 @@ summary: register a new user
 description: Creates a new user with email and password
 operationId: registerUser
 security:
-  - bearerAuth: []
+  - {}
 requestBody:
   required: true
   content:
