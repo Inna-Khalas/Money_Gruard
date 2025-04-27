@@ -69,26 +69,26 @@ export const updateUser = async (id, payload = {}) => {
   return rawResult;
 };
 
-// export const refreshSession = async ({ sessionId, refreshToken }) => {
-//   const session = await SessionsCollections.findOne({
-//     _id: sessionId,
-//     refreshToken,
-//   });
+export const refreshSession = async ({ sessionId, refreshToken }) => {
+  const session = await SessionsCollections.findOne({
+    _id: sessionId,
+    refreshToken,
+  });
 
-//   if (!session) {
-//     throw createHttpError(401, 'Unauthorized');
-//   }
+  if (!session) {
+    throw createHttpError(401, 'Unauthorized');
+  }
 
-//   const sesionTokenExpired =
-//     new Date() > new Date(session.refreshTokenValidUntil);
+  const sesionTokenExpired =
+    new Date() > new Date(session.refreshTokenValidUntil);
 
-//   if (sesionTokenExpired) {
-//     throw createHttpError(401, 'Session token expired');
-//   }
+  if (sesionTokenExpired) {
+    throw createHttpError(401, 'Session token expired');
+  }
 
-//   await SessionsCollections.deleteOne({ _id: sessionId, refreshToken });
-//   return SessionsCollections.create({
-//     userId: session.userId,
-//     ...createSession(),
-//   });
-// };
+  await SessionsCollections.deleteOne({ _id: sessionId, refreshToken });
+  return SessionsCollections.create({
+    userId: session.userId,
+    ...createSession(),
+  });
+};
