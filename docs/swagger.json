@@ -37,9 +37,7 @@
         "description": "Creates a new user with email and password",
         "operationId": "registerUser",
         "security": [
-          {
-            "bearerAuth": []
-          }
+          {}
         ],
         "requestBody": {
           "required": true,
@@ -120,9 +118,7 @@
         "description": "Authenticates user and returns tokens",
         "operationId": "loginUser",
         "security": [
-          {
-            "bearerAuth": []
-          }
+          {}
         ],
         "requestBody": {
           "required": true,
@@ -350,7 +346,7 @@
         }
       }
     },
-    "/auth/user": {
+    "/auth/carrent/user": {
       "get": {
         "tags": [
           "Auth"
@@ -394,7 +390,7 @@
         }
       }
     },
-    "/auth/user/{id}": {
+    "/auth/user": {
       "patch": {
         "tags": [
           "Auth"
@@ -772,7 +768,9 @@
                 },
                 "required": [
                   "value",
-                  "date"
+                  "date",
+                  "type",
+                  "category"
                 ]
               }
             }
@@ -827,7 +825,7 @@
         }
       }
     },
-    "/transactions/categories": {
+    "/categories": {
       "get": {
         "tags": [
           "Transactions"
