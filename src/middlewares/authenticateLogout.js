@@ -9,7 +9,7 @@ if (!JWT_ACCESS_SECRET) {
 }
 
 export const verifyToken = (req, res, next) => {
-  // 🎯 Пытаемся взять токен из заголовка Authorization
+  // токен из заголовка Authorization
   const authHeader = req.headers.authorization;
   let token = null;
 
@@ -17,7 +17,6 @@ export const verifyToken = (req, res, next) => {
     token = authHeader.split(' ')[1];
   }
 
-  // 🎯 Если нет в заголовке — пробуем из куков
   if (!token && req.cookies.access_token) {
     token = req.cookies.access_token;
   }
@@ -34,6 +33,6 @@ export const verifyToken = (req, res, next) => {
     }
 
     req.user = decoded;
-    next(); // 🎯 Продолжаем выполнение если токен валидный
+    next(); 
   });
 };

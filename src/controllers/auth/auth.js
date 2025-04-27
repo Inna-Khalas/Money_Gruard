@@ -38,7 +38,7 @@ export const loginUserController = async (req, res) => {
 };
 // ------
 export const logoutUserController = async (req, res) => {
-  // 🎯 Попытка взять токен из заголовка Authorization
+  //токен из заголовка Authorization
   const authHeader = req.headers.authorization;
   let token = null;
 
@@ -46,7 +46,6 @@ export const logoutUserController = async (req, res) => {
     token = authHeader.split(' ')[1];
   }
 
-  // 🎯 Если в заголовке нет — пробуем из куков
   if (!token && req.cookies.access_token) {
     token = req.cookies.access_token;
   }
