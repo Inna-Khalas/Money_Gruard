@@ -4,7 +4,7 @@ import {
   refreshSession,
   registerUser,
 } from '../../services/auth.js';
-import { setUpSession } from '../../utils/setUpSession.js';
+// import { setUpSession } from '../../utils/setUpSession.js';
 
 export const registerUserController = async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -25,14 +25,16 @@ export const registerUserController = async (req, res, next) => {
 export const loginUserController = async (req, res) => {
   const session = await loginUser(req.body);
 
-  setUpSession(res, session);
+  const { accessToken, refreshToken } = session;
+
+  // setUpSession(res, { accessToken, refreshToken });
 
   res.status(200).json({
     status: 200,
     message: 'Successfully logged in an user!',
     data: {
-      accessToken: session.accessToken,
-      refreshToken: session.refreshToken,
+      accessToken,
+      refreshToken,
     },
   });
 };
