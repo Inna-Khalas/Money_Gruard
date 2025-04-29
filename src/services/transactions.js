@@ -16,17 +16,23 @@ export const createTransaction = async (payload) => {
     }
     payload.category = categories._id;
   }
-  return await Transaction.create(payload);
+
+  const newTransaction = await Transaction.create(payload);
+
+  await newTransaction.populate('category', 'name -_id');
+  return newTransaction;
 };
 
 // Put transaction
 
 export const updateTransaction = async (transId, ownerId, payload) => {
-  return await Transaction.findOneAndUpdate(
+  const updateTransaction = await Transaction.findOneAndUpdate(
     { _id: transId, owner: ownerId },
     payload,
     { new: true },
-  );
+  ).populate('category', 'name -_id');
+
+  return updateTransaction;
 };
 
 // Delete transactions
