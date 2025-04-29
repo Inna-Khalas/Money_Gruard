@@ -42,12 +42,16 @@ export const loginUser = async (payload) => {
 
   await SessionsCollections.deleteOne({ userId: user._id });
 
-  return await SessionsCollections.create({
+  const session = await SessionsCollections.create({
     userId: user._id,
     ...createSession(),
   });
+  return {
+    accessToken: session.accessToken,
+    refreshToken: session.refreshToken,
+    sessionId: session._id,
+  };
 };
-
 // logout
 
 export const logoutUser = async (res) => {
@@ -87,8 +91,14 @@ export const refreshSession = async ({ sessionId, refreshToken }) => {
   }
 
   await SessionsCollections.deleteOne({ _id: sessionId, refreshToken });
-  return SessionsCollections.create({
+  const sessionCreate = await SessionsCollections.create({
     userId: session.userId,
     ...createSession(),
   });
+
+  return {
+    accessToken: sessionCreate.accessToken,
+    refreshToken: sessionCreate.refreshToken,
+    sessionId: sessionCreate._id,
+  };
 };
