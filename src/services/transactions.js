@@ -1,33 +1,66 @@
 import { CategoryCollection } from '../db/models/category.js';
 import { Transaction } from '../db/models/transactions.js';
-
+import mongoose from 'mongoose';
 // Get transactions
 
 // Create a new transaction
 
+                                   //      export const createTransaction = async (payload) => {
+                                   //        if (payload.type === 'expense' && typeof payload.category === 'string') {
+                                   //          const categories = await CategoryCollection.findOne({
+                                   //            name: payload.category.toLowerCase(),
+                                   //            type: 'expense',
+                                   //          });
+                                   //          if (!categories) {
+                                   //            throw new Error(`${payload.category} not found!`);
+                                   //          }
+                                   //          payload.category = categories._id;
+                                   //        }
+                                   //        return await Transaction.create(payload);
+                                   //      };
+
 export const createTransaction = async (payload) => {
-  if (payload.type === 'expense' && typeof payload.category === 'string') {
-    const categories = await CategoryCollection.findOne({
-      name: payload.category.toLowerCase(),
-      type: 'expense',
-    });
-    if (!categories) {
-      throw new Error(`${payload.category} not found!`);
+  if (payload.type === 'expense') {
+    //  Если категория передана как строка, но не в формате ObjectId — ищем по имени
+    if (typeof payload.category === 'string' && !mongoose.Types.ObjectId.isValid(payload.category)) {
+      const categoryDoc = await CategoryCollection.findOne({
+        name: payload.category.toLowerCase(),
+        type: 'expense',
+      });
+
+      if (!categoryDoc) {
+        throw new Error(`Category '${payload.category}' not found!`);
+      }
+
+      payload.category = categoryDoc._id;
     }
-    payload.category = categories._id;
+
+    //  Если категория в формате ObjectId, ничего не делаем — передаём напрямую
   }
+
   return await Transaction.create(payload);
 };
 
 // Put transaction
 
+               //     export const updateTransaction = async (transId, ownerId, payload) => {
+                //      return await Transaction.findOneAndUpdate(
+                //        { _id: transId, owner: ownerId },
+                 //       payload,
+                 //      { new: true },
+                  //    );
+                  //  };
 export const updateTransaction = async (transId, ownerId, payload) => {
   return await Transaction.findOneAndUpdate(
     { _id: transId, owner: ownerId },
     payload,
-    { new: true },
-  );
+    { new: true }
+  ).populate({
+    path: 'category',
+    select: 'name -_id',
+  });
 };
+
 
 // Delete transactions
 
@@ -44,7 +77,8 @@ export const getCategoriesService = async () => {
   try {
     const categories = await CategoryCollection.find(
       {},
-      { name: 1, type: 1, _id: 0 },
+      //{ name: 1, type: 1, _id: 0 },
+      { name: 1, type: 1 },
     );
     return categories;
   } catch (error) {
