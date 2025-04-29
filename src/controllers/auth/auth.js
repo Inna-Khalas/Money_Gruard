@@ -25,7 +25,7 @@ export const registerUserController = async (req, res, next) => {
 export const loginUserController = async (req, res) => {
   const session = await loginUser(req.body);
 
-  const { accessToken, refreshToken } = session;
+  const { accessToken, refreshToken, sessionId } = session;
 
   // setUpSession(res, { accessToken, refreshToken });
 
@@ -35,6 +35,7 @@ export const loginUserController = async (req, res) => {
     data: {
       accessToken,
       refreshToken,
+      sessionId,
     },
   });
 };
@@ -65,6 +66,7 @@ export const refreshSessionController = async (req, res) => {
     data: {
       accessToken: session.accessToken,
       refreshToken: session.refreshToken,
+      sessionId: session.sessionId,
     },
   });
 };
