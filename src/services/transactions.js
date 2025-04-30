@@ -4,42 +4,49 @@ import mongoose from 'mongoose';
 
 // Create a new transaction
 
+const capitalizeFirstLetter = (str) =>
+  str.charAt(0).toUpperCase() + str.slice(1);
+
 export const createTransaction = async (payload) => {
   if (payload.type === 'expense') {
-    if (typeof payload.category === 'string' && !mongoose.Types.ObjectId.isValid(payload.category)) {
+    if (
+      typeof payload.category === 'string' &&
+      !mongoose.Types.ObjectId.isValid(payload.category)
+    ) {
+      const categoryName = capitalizeFirstLetter(payload.category);
+
       const categoryDoc = await CategoryCollection.findOne({
-        name: payload.category.toLowerCase(),
+        name: categoryName,
         type: 'expense',
       });
 
       if (!categoryDoc) {
-        throw new Error(`Category '${payload.category}' not found!`);
+        throw new Error(`Category '${categoryName}' not found!`);
       }
 
       payload.category = categoryDoc._id;
     }
   }
+  console.log('Payload before creating transaction:', payload);
 
   return await Transaction.create(payload);
-//   const newTransaction = await Transaction.create(payload);
-
-//   await newTransaction.populate('category', 'name -_id');
-//   return newTransaction;
 };
 
 // Put transaction
 
 export const updateTransaction = async (transId, ownerId, payload) => {
+  if (payload.category) {
+    payload.category = capitalizeFirstLetter(payload.category);
+  }
+
   const updateTransaction = await Transaction.findOneAndUpdate(
     { _id: transId, owner: ownerId },
     payload,
     { new: true },
-  ).populate(path: 'category',
-    select: 'name -_id',);
+  ).populate({ path: 'category', select: 'name -_id' });
 
   return updateTransaction;
 };
-
 
 // Delete transactions
 
@@ -54,11 +61,7 @@ export const removeTransaction = async (id) => {
 
 export const getCategoriesService = async () => {
   try {
-    const categories = await CategoryCollection.find(
-      {},
-      //{ name: 1, type: 1, _id: 0 },
-      { name: 1, type: 1 },
-    );
+    const categories = await CategoryCollection.find({}, { name: 1, type: 1 });
     return categories;
   } catch (error) {
     console.error('Error in getCategoriesService:', error.message);
