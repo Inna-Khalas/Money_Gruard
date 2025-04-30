@@ -1,26 +1,30 @@
 import { CategoryCollection } from '../db/models/category.js';
 import { Transaction } from '../db/models/transactions.js';
-
-// Get transactions
+import mongoose from 'mongoose';
 
 // Create a new transaction
 
 export const createTransaction = async (payload) => {
-  if (payload.type === 'expense' && typeof payload.category === 'string') {
-    const categories = await CategoryCollection.findOne({
-      name: payload.category.toLowerCase(),
-      type: 'expense',
-    });
-    if (!categories) {
-      throw new Error(`${payload.category} not found!`);
+  if (payload.type === 'expense') {
+    if (typeof payload.category === 'string' && !mongoose.Types.ObjectId.isValid(payload.category)) {
+      const categoryDoc = await CategoryCollection.findOne({
+        name: payload.category.toLowerCase(),
+        type: 'expense',
+      });
+
+      if (!categoryDoc) {
+        throw new Error(`Category '${payload.category}' not found!`);
+      }
+
+      payload.category = categoryDoc._id;
     }
-    payload.category = categories._id;
   }
 
-  const newTransaction = await Transaction.create(payload);
+  return await Transaction.create(payload);
+//   const newTransaction = await Transaction.create(payload);
 
-  await newTransaction.populate('category', 'name -_id');
-  return newTransaction;
+//   await newTransaction.populate('category', 'name -_id');
+//   return newTransaction;
 };
 
 // Put transaction
@@ -30,10 +34,12 @@ export const updateTransaction = async (transId, ownerId, payload) => {
     { _id: transId, owner: ownerId },
     payload,
     { new: true },
-  ).populate('category', 'name -_id');
+  ).populate(path: 'category',
+    select: 'name -_id',);
 
   return updateTransaction;
 };
+
 
 // Delete transactions
 
@@ -50,7 +56,8 @@ export const getCategoriesService = async () => {
   try {
     const categories = await CategoryCollection.find(
       {},
-      { name: 1, type: 1, _id: 0 },
+      //{ name: 1, type: 1, _id: 0 },
+      { name: 1, type: 1 },
     );
     return categories;
   } catch (error) {
