@@ -6,7 +6,10 @@ import mongoose from 'mongoose';
 
 export const createTransaction = async (payload) => {
   if (payload.type === 'expense') {
-    if (typeof payload.category === 'string' && !mongoose.Types.ObjectId.isValid(payload.category)) {
+    if (
+      typeof payload.category === 'string' &&
+      !mongoose.Types.ObjectId.isValid(payload.category)
+    ) {
       const categoryDoc = await CategoryCollection.findOne({
         name: payload.category.toLowerCase(),
         type: 'expense',
@@ -21,10 +24,10 @@ export const createTransaction = async (payload) => {
   }
 
   return await Transaction.create(payload);
-//   const newTransaction = await Transaction.create(payload);
+  //   const newTransaction = await Transaction.create(payload);
 
-//   await newTransaction.populate('category', 'name -_id');
-//   return newTransaction;
+  //   await newTransaction.populate('category', 'name -_id');
+  //   return newTransaction;
 };
 
 // Put transaction
@@ -34,12 +37,10 @@ export const updateTransaction = async (transId, ownerId, payload) => {
     { _id: transId, owner: ownerId },
     payload,
     { new: true },
-  ).populate(path: 'category',
-    select: 'name -_id',);
+  ).populate({ path: 'category', select: 'name -_id' });
 
   return updateTransaction;
 };
-
 
 // Delete transactions
 
