@@ -617,72 +617,90 @@
         ],
         "responses": {
           "200": {
-            "description": "List of transactions",
+            "description": "Successful response — with or without transactions",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "200"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Transactions successfully found"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/transactions"
-                      }
-                    },
-                    "pagination": {
+                  "oneOf": [
+                    {
                       "type": "object",
                       "properties": {
-                        "totalTransactions": {
-                          "type": "integer",
-                          "example": 25
+                        "status": {
+                          "type": "string",
+                          "example": "200"
                         },
-                        "currentPage": {
-                          "type": "integer",
-                          "example": 1
+                        "message": {
+                          "type": "string",
+                          "example": "Transactions successfully found"
                         },
-                        "totalPages": {
-                          "type": "integer",
-                          "example": 3
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/transactions"
+                          }
                         },
-                        "limit": {
-                          "type": "integer",
-                          "example": 10
+                        "pagination": {
+                          "type": "object",
+                          "properties": {
+                            "totalTransactions": {
+                              "type": "integer",
+                              "example": 25
+                            },
+                            "currentPage": {
+                              "type": "integer",
+                              "example": 1
+                            },
+                            "totalPages": {
+                              "type": "integer",
+                              "example": 3
+                            },
+                            "limit": {
+                              "type": "integer",
+                              "example": 10
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "200"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "No transactions found"
+                        },
+                        "data": {
+                          "type": "array",
+                          "example": []
+                        },
+                        "pagination": {
+                          "type": "object",
+                          "properties": {
+                            "totalTransactions": {
+                              "type": "integer",
+                              "example": 0
+                            },
+                            "currentPage": {
+                              "type": "integer",
+                              "example": 1
+                            },
+                            "totalPages": {
+                              "type": "integer",
+                              "example": 0
+                            },
+                            "limit": {
+                              "type": "integer",
+                              "example": 10
+                            }
+                          }
                         }
                       }
                     }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "No transactions found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "404"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Transactions not found"
-                    },
-                    "data": {
-                      "type": "array",
-                      "example": []
-                    }
-                  }
+                  ]
                 }
               }
             }
