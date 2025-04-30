@@ -96,10 +96,16 @@ export const getTransactionsController = async (req, res) => {
   });
 
   if (transactions.length === 0) {
-    return res.status(404).json({
-      status: '404',
-      message: 'Transactions not found',
+    return res.status(200).json({
+      status: '200',
+      message: 'No transactions found',
       data: [],
+      pagination: {
+        totalTransactions: 0,
+        currentPage: page,
+        totalPages: 0,
+        limit,
+      },
     });
   }
 
